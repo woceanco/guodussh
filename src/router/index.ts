@@ -4,8 +4,8 @@ import HomeView from "../views/HomeView.vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "login",
-    component: () => import("../views/login.vue"),
+    name: "layout",
+    component: () => import("../views/layout.vue"),
   },
   {
     path: "/login",
@@ -14,7 +14,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/login.vue"),
   },
   {
-    path: "/home",
+    path: "/layout",
     name: "layout",
     //component: HomeView,
     component: () => import("../views/layout.vue"),
@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/home/home",
     name: "home",
     component: () => import("../views/navMenu/home.vue"),
+  },
+  {
+    path: "/aside",
+    name: "aside",
+    component: () => import("../views/navMenu/aside.vue"),
   },
   {
     path: "/about",
@@ -39,5 +44,14 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 });
+
+//导航
+// router.beforeEach((to, from, next) => {
+//   // to and from are both route objects. must call `next`.
+//   if (to.path === "/login") return next();
+//   const tokenStr = window.sessionStorage.getItem("token");
+//   if (!tokenStr) return next("/login");
+//   next();
+// });
 
 export default router;

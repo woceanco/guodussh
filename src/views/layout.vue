@@ -1,65 +1,77 @@
 <template>
-  <el-container class="containter">
-    <el-header class="header">
-      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
-        <el-radio-button :label="false">展开</el-radio-button>
-        <el-radio-button :label="true">收起</el-radio-button>
-      </el-radio-group>
-      Header</el-header
-    >
-    <el-container class="body">
-      <el-aside class="aside" width="200px">
-        <el-menu
-          default-active="1-4-1"
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
-          :collapse="isCollapse"
-        >
-          <el-menu-item index="1">
-            <el-menu-item index="1">
-              <template #title>
-                <i class="el-icon-location"></i>
-                <span>导航一</span>
-              </template>
-            </el-menu-item>
-            <el-menu-item-group>
-              <template #title>
-                <span>分组一</span>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-              </template>
-            </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-          </el-menu-item>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <template #title>
-              <span>导航二</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <template #title>
-              <span>导航三</span>
-            </template>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <template #title>
-              <span>导航四</span>
-            </template>
-          </el-menu-item>
-        </el-menu>
-      </el-aside>
-      <el-container>
-        <el-main>Main</el-main>
+  <div style="height: 800px">
+    <el-container class="containter">
+      <el-header class="header">
+        <sapn>Vue Test</sapn>
+        Header</el-header
+      >
+      <el-container class="body">
+        <el-row class="tac">
+          <el-col :span="12">
+            <h5 class="mb-2">Default colors</h5>
+            <el-menu
+              default-active="2"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose"
+            >
+              <el-sub-menu index="1">
+                <template #title>
+                  <el-icon><location /></el-icon>
+                  <span>Navigator One</span>
+                </template>
+                <el-menu-item-group title="Group One">
+                  <el-menu-item index="1-1">item one</el-menu-item>
+                  <el-menu-item index="1-2">item one</el-menu-item>
+                </el-menu-item-group>
+                <el-menu-item-group title="Group Two">
+                  <el-menu-item index="1-3">item three</el-menu-item>
+                </el-menu-item-group>
+                <el-sub-menu index="1-4">
+                  <template #title>item four</template>
+                  <el-menu-item index="1-4-1">item one</el-menu-item>
+                </el-sub-menu>
+              </el-sub-menu>
+              <el-menu-item index="2">
+                <el-icon><icon-menu /></el-icon>
+                <span>Navigator Two</span>
+              </el-menu-item>
+              <el-menu-item index="3" disabled>
+                <el-icon><document /></el-icon>
+                <span>Navigator Three</span>
+              </el-menu-item>
+              <el-menu-item index="4">
+                <el-icon><setting /></el-icon>
+                <span>Navigator Four</span>
+              </el-menu-item>
+            </el-menu>
+          </el-col>
+        </el-row>
+        <el-container>
+          <el-main>Main</el-main>
+        </el-container>
       </el-container>
     </el-container>
-  </el-container>
+  </div>
 </template>
+
+<script lang="ts" setup>
+export default {
+  data() {
+    return {
+      name: "abc",
+    },
+  },
+  created() {
+    this.getMenuList();
+  },
+  methods: {
+    getMenuList() {
+      const data = this.$http.get("/public/data/menu.json");
+    }
+  }
+}
+</script>
 
 <style>
 .el-header,
@@ -68,9 +80,12 @@
   color: #333;
   text-align: center;
   line-height: 60px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .el-aside {
+  width: 200px;
   background-color: #d3dce6;
   color: #333;
   text-align: center;
@@ -86,6 +101,10 @@
 
 body > .el-container {
   margin-bottom: 40px;
+}
+
+.el-container {
+  height: 100%;
 }
 
 .el-container:nth-child(5) .el-aside,
@@ -107,20 +126,5 @@ body > .el-container {
 }
 </style>
 
-<script>
-export default {
-  data() {
-    return {
-      isCollapse: true,
-    };
-  },
-  methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
-  },
-};
-</script>
+function getMenuList() { throw new Error('Function not implemented.'); }
+function getMenuList() { throw new Error('Function not implemented.'); }

@@ -14,12 +14,14 @@
           type="text"
           v-model="ruleForm.name"
           placeholder="账号"
+          prefix-icon="el-icon-user"
         ></el-input>
       </el-form-item>
       <el-form-item prop="pass">
         <el-input
           type="password"
           v-model="ruleForm.pass"
+          prefix-icon="el-icon-lock"
           autocomplete="off"
           placeholder="密码"
           show-password
@@ -91,7 +93,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const { data: result } = this.$http.post("login", this.ruleForm);
-          if (result.status !== 200) return console.log("login fial")
+          if (result.status !== 200) return console.log("login fial");
+          window.sessionStorage.setItem(result.data.token);
+          this.$router.push("/home");
         } else {
           console.log("error submit!!");
           return false;
