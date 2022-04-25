@@ -3,8 +3,7 @@ import HomeView from "../views/HomeView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    name: "layout",
+    path: "/home",
     component: () => import("../views/layout.vue"),
   },
   {
@@ -18,6 +17,14 @@ const routes: Array<RouteRecordRaw> = [
     name: "layout",
     //component: HomeView,
     component: () => import("../views/layout.vue"),
+    redirect: "/welcome",
+    children: [
+      {
+        path: "/welcome",
+        name: "welcome",
+        component: () => import("../views/Welcome.vue"),
+      },
+    ],
   },
   {
     path: "/home/home",
@@ -36,7 +43,7 @@ const routes: Array<RouteRecordRaw> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+      import(/* webpackChunkName: "about" */ "../views/Welcome.vue"),
   },
 ];
 

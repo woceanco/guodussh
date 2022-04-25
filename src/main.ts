@@ -19,7 +19,7 @@ import {
   ElMenuItem,
   ElIcon,
 } from "element-plus";
-import { Location } from "@element-plus/icons";
+import { Location, Document, Setting, Fold } from "@element-plus/icons";
 
 axios.defaults.baseURL = "http://127.0.0.1:8888/";
 const app = createApp(App);
@@ -37,6 +37,10 @@ app.use(ElSubMenu);
 app.use(ElMenuItem);
 app.use(ElIcon);
 app.component("location",Location);
+app.component("document",Document);
+//app.component("iconMenu",IconMenu);
+app.component("setting",Setting);
+app.component("fold",Fold);
 app.config.globalProperties.$http = axios;
 app.config.globalProperties.$message = ElMessage;
 app.use(store).use(router).mount("#app");
