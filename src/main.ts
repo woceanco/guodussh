@@ -1,5 +1,6 @@
 import { createApp } from "vue";
 import "element-plus/dist/index.css";
+import "@/assets/css/globle.css";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -18,8 +19,14 @@ import {
   ElSubMenu,
   ElMenuItem,
   ElIcon,
+  ElBreadcrumb,
+  ElCard,
+  ElCol,
+  ElTable,
+  ElTableColumn,
+  ElSwitch,
 } from "element-plus";
-import { Location, Document, Setting, Fold } from "@element-plus/icons";
+import { Location, Document, Setting, Fold, Search, } from "@element-plus/icons";
 
 axios.defaults.baseURL = "http://127.0.0.1:8888/";
 const app = createApp(App);
@@ -36,11 +43,18 @@ app.use(ElMenu);
 app.use(ElSubMenu);
 app.use(ElMenuItem);
 app.use(ElIcon);
+app.use(ElBreadcrumb);
+app.use(ElCard);
+app.use(ElCol);
+app.use(ElTable);
+app.use(ElTableColumn);
+app.use(ElSwitch);
 app.component("location",Location);
 app.component("document",Document);
 //app.component("iconMenu",IconMenu);
 app.component("setting",Setting);
 app.component("fold",Fold);
+app.component("search",Search);
 app.config.globalProperties.$http = axios;
 app.config.globalProperties.$message = ElMessage;
 app.use(store).use(router).mount("#app");

@@ -1,10 +1,6 @@
 <template>
   <div style="height: 800px">
     <el-container class="containter">
-      <el-header class="header">
-        <sapn>Vue Test</sapn>
-        Header</el-header
-      >
       <el-container class="body">
         <el-row class="tac">
           <el-col :span="12">
@@ -17,6 +13,7 @@
               :unique-opened="true"
               :collapse="isCollapse"
               :router="true"
+              :default-active="activePath"
             >
               <el-sub-menu index="1">
                 <template #title>
@@ -24,10 +21,10 @@
                   <span>Navigator One</span>
                 </template>
                 <el-menu-item index="/welcome">item one</el-menu-item>
-                <el-menu-item index="1-2">item one</el-menu-item>
+                <el-menu-item index="/list">item one</el-menu-item>
                 <el-sub-menu index="1-3">
                   <template #title>item four</template>
-                  <el-menu-item index="1-3-1">item one</el-menu-item>
+                  <el-menu-item index="/tabs">item one</el-menu-item>
                 </el-sub-menu>
               </el-sub-menu>
               <el-sub-menu index="2">
@@ -52,8 +49,9 @@
           </el-col>
         </el-row>
         <el-container>
+          <el-header class="header">header</el-header>
           <el-main>
-            <router-view />
+            <Tabs />
           </el-main>
         </el-container>
       </el-container>
@@ -63,22 +61,36 @@
 
 <script lang="ts">
 import { Tickets } from "@element-plus/icons-vue/dist/types";
+import Tabs from "@/views/navMenu/tabs.vue";
+interface IDate {
+  test: string;
+  isCollapse: boolean;
+  activePath: string;
+}
 export default {
-  data() {
+  data(): IDate {
     return {
       test: "stt",
       isCollapse: false,
+      activePath: "",
     };
   },
+  components: {
+    Tabs,
+  },
   created() {
-    this.getTestMenuList();
+    (this as any).getTestMenuList();
   },
   methods: {
     getTestMenuList() {
-      const data = this.$http.get("../../public/data/menu.json");
+      const data = (this as any).$http.get("public/data/menu.json");
+      (this as any).activePath = window.sessionStorage.getItem("");
     },
     menuCollapse() {
-      this.isCollapse = !this.isCollapse;
+      (this as any).isCollapse = !(this as any).isCollapse;
+    },
+    setNavStatus() {
+      window.sessionStorage.setItem("", "");
     },
   },
 };
@@ -141,5 +153,9 @@ body > .el-container {
   font-size: 16px;
   line-height: 30px;
   text-align: center;
+}
+
+.el-main {
+  line-height: 0px;
 }
 </style>

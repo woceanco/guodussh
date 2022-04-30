@@ -3,8 +3,9 @@ import HomeView from "../views/HomeView.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/home",
-    component: () => import("../views/layout.vue"),
+    path: "/",
+    name: "login",
+    component: () => import("../views/login.vue"),
   },
   {
     path: "/login",
@@ -17,12 +18,22 @@ const routes: Array<RouteRecordRaw> = [
     name: "layout",
     //component: HomeView,
     component: () => import("../views/layout.vue"),
-    redirect: "/welcome",
+    //redirect: "/welcome",
     children: [
       {
         path: "/welcome",
         name: "welcome",
         component: () => import("../views/Welcome.vue"),
+      },
+      {
+        path: "/list",
+        name: "list",
+        component: () => import("../views/info/list.vue"),
+      },
+      {
+        path: "/tabs",
+        name: "tabs",
+        component: () => import("../views/navMenu/tabs.vue"),
       },
     ],
   },
