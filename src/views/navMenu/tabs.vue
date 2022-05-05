@@ -7,14 +7,22 @@
   <el-card>
     <el-row :gutter="20" class="el-row">
       <el-col :span="8">
-        <el-input placeholder="请输入查询内容">
+        <el-input
+          v-model="queryParam.query"
+          placeholder="请输入查询内容"
+          clearable
+        >
           <template #append>
-            <el-icon :size="32"><search /></el-icon>
+            <el-button @click="getUserList"
+              ><el-icon><search /></el-icon
+            ></el-button>
           </template>
         </el-input>
       </el-col>
       <el-col :span="4">
-        <el-button type="primary">添加用户</el-button>
+        <el-button type="primary" @click="dialogFormVisible = true"
+          >添加用户</el-button
+        >
       </el-col>
     </el-row>
     <el-table :data="userlist" border stripe>
@@ -25,20 +33,70 @@
       <el-table-column label="角色" prop="role"></el-table-column>
       <el-table-column label="状态" prop="state">
         <template v-slot="scope">
-          <el-switch v-model="scope.row.state"></el-switch>
+          <el-switch
+            v-model="scope.row.state"
+            @change="userState(scope.row)"
+          ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作"></el-table-column>
+      <el-table-column label="操作">
+        <template v-slot="scope">
+          <el-button type="primary" v-model="scope.row.id" size="small"
+            ><el-icon><edit /></el-icon
+          ></el-button>
+          <el-button type="danger" v-model="scope.row.id" size="small"
+            ><el-icon><delete /></el-icon
+          ></el-button>
+          <el-button type="warning" v-model="scope.row.id" size="small"
+            ><el-icon><setting /></el-icon
+          ></el-button>
+        </template>
+      </el-table-column>
     </el-table>
+    <el-pagination
+      v-model:currentPage="queryParam.pagenum"
+      v-model:page-size="queryParam.pagesize"
+      :page-sizes="[5, 10, 20]"
+      :small="small"
+      :disabled="disabled"
+      :background="background"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
+    <el-dialog v-model="dialogFormVisible" title="Add User" width="40%">
+      <el-form ref="formRef" :model="form" :rules="rules">
+        <el-form-item
+          label="username"
+          :label-width="formLabelWidth"
+          prop="name"
+        >
+          <el-input v-model="form.name" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="Zones" :label-width="formLabelWidth">
+          <el-select v-model="form.region" placeholder="Please select a zone">
+            <el-option label="Zone No.1" value="shanghai" />
+            <el-option label="Zone No.2" value="beijing" />
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="addUser">添加</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </el-card>
 </template>
 
 <script lang="ts">
 import { ArrowRight } from "@element-plus/icons-vue";
-import { th } from "_element-plus@2.1.9@element-plus/lib/locale";
 export default {
   data() {
     return {
+      ArrowRight: ArrowRight,
       queryParam: {
         query: "",
         pagenum: 1,
@@ -54,7 +112,27 @@ export default {
           state: true,
         },
       ],
-      total: 0,
+      total: 50,
+      input: "aaaaa",
+      dialogFormVisible: false,
+      form: {
+        name: "",
+        region: "",
+      },
+      formLabelWidth: "140px",
+      rules: {
+        //name: [{ validator: validateName, trigger: "blur" }],
+        //pass: [{ validator: validatePass, trigger: "blur" }],
+        name: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          {
+            min: 1,
+            max: 10,
+            message: "长度在1到10个字符之间",
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   created() {
@@ -62,14 +140,38 @@ export default {
   },
   methods: {
     getUserList() {
-      const { data: res } = this.$http.get("user", { param: this.queryParam });
+      const { data: res } = (this as any).$http.get("user", {
+        param: (this as any).queryParam,
+      });
       if (res.meta.status == 200) {
-        this.userlist = res.data.users;
-        this.total = res.data.total;
+        (this as any).userlist = res.data.users;
+        (this as any).total = res.data.total;
       }
     },
-    change(e) {
-      this.$forceUpdate();
+    pageSizeChange(newSize: number) {
+      //this.queryParam.pagesize=newSize;
+      //this.getUserList();
+      console.log(newSize);
+    },
+    pageNumChange(newPage: number) {
+      //this.queryParam.pagenum=newPage;
+      //this.getUserList();
+      console.log(newPage);
+    },
+    userState(userInfo: object) {
+      //const { data: res } = this.$http.put(`users/{userInfo.id}/state/{userInfo.state}`);
+      //   if () {
+      //     return this.$message.error("error");
+      //   };
+    },
+    addUser() {
+      //this.$refs.formRef.validate(valid => {} )
+      console.log("add");
+      (this as any).dialogFormVisible = false;
+      //this.getUserList();
+    },
+    change(e: string) {
+      (this as any).$forceUpdate();
     },
   },
 };
@@ -89,5 +191,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
+}
+
+.el-pagination {
+  margin-top: 15px;
 }
 </style>

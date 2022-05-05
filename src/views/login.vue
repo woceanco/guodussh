@@ -92,9 +92,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          const { data: result } = this.$http.post("login", this.ruleForm);
-          if (result.status !== 200) return console.log("login fial");
-          window.sessionStorage.setItem(result.data.token);
+          //const { data: result } = this.$http.post("login", this.ruleForm);
+          //if (result.status !== 200) return console.log("login fial");
+          //window.sessionStorage.setItem(result.data.token);
           this.$router.push("/home");
         } else {
           console.log("error submit!!");

@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { Tickets } from "@element-plus/icons-vue/dist/types";
+import { List, Tickets } from "@element-plus/icons-vue/dist/types";
 import Tabs from "@/views/navMenu/tabs.vue";
 interface IDate {
   test: string;
@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
