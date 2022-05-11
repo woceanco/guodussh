@@ -2,54 +2,25 @@
   <div style="height: 800px">
     <el-container class="containter">
       <el-container class="body">
-        <el-row class="tac">
-          <el-col :span="12">
-            <div class="mb-2" @click="menuCollapse">|||</div>
+        <el-header class="header">header</el-header>
+        <el-container>
+          <el-aside :width="isCollapse ? '60px' : '200px'"
+            ><div class="mb-2" @click="menuCollapse">|||</div>
             <el-menu
               default-active="2"
               class="el-menu-vertical-demo"
-              @open="handleOpen"
-              @close="handleClose"
               :unique-opened="true"
               :collapse="isCollapse"
               :router="true"
               :default-active="activePath"
             >
-              <el-sub-menu index="1">
-                <template #title>
-                  <el-icon><fold /></el-icon>
-                  <span>Navigator One</span>
-                </template>
-                <el-menu-item index="/welcome">item one</el-menu-item>
-                <el-menu-item index="/list">item one</el-menu-item>
-                <el-sub-menu index="1-3">
-                  <template #title>item four</template>
-                  <el-menu-item index="/tabs">item one</el-menu-item>
-                </el-sub-menu>
-              </el-sub-menu>
-              <el-sub-menu index="2">
-                <template #title>
-                  <el-icon><icon-menu /></el-icon>
-                  <span>Navigator Two</span>
-                </template>
-                <el-sub-menu index="2-1">
-                  <template #title>item four</template>
-                  <el-menu-item index="6">item one</el-menu-item>
-                </el-sub-menu>
-              </el-sub-menu>
-              <el-menu-item index="3">
-                <el-icon><document /></el-icon>
-                <span>Navigator Three</span>
-              </el-menu-item>
-              <el-menu-item index="4">
-                <el-icon><setting /></el-icon>
-                <span>Navigator Four</span>
-              </el-menu-item>
+              <a-side
+                v-for="menu in menuList"
+                :item="menu"
+                :key="menu.id"
+              ></a-side>
             </el-menu>
-          </el-col>
-        </el-row>
-        <el-container>
-          <el-header class="header">header</el-header>
+          </el-aside>
           <el-main>
             <Tabs />
           </el-main>
@@ -59,35 +30,47 @@
   </div>
 </template>
 
-<script lang="ts">
-import { List, Tickets } from "@element-plus/icons-vue/dist/types";
+<script>
 import Tabs from "@/views/navMenu/tabs.vue";
-interface IDate {
-  test: string;
-  isCollapse: boolean;
-  activePath: string;
-}
+import aSide from "@/views/navMenu/aside.vue";
+
+// interface IDate {
+//   test: string;
+//   isCollapse: boolean;
+//   activePath: string;
+//   menuList: Array<Map<string, object>>;
+// }
 export default {
-  data(): IDate {
+  data() {
     return {
       test: "stt",
       isCollapse: false,
       activePath: "",
+      menuList: [],
     };
   },
   components: {
     Tabs,
+    aSide,
+  },
+  props: {
+    list: {
+      type: Array,
+      required: true,
+    },
   },
   created() {
-    (this as any).getTestMenuList();
+    this.getTestMenuList();
   },
   methods: {
-    getTestMenuList() {
-      const data = (this as any).$http.get("public/data/menu.json");
-      (this as any).activePath = window.sessionStorage.getItem("");
+    async getTestMenuList() {
+      const { data: res } = await this.$http.get("/menu.json");
+      //console.log(res);
+      this.menuList = res.data;
+      this.activePath = window.sessionStorage.getItem("");
     },
     menuCollapse() {
-      (this as any).isCollapse = !(this as any).isCollapse;
+      this.isCollapse = !this.isCollapse;
     },
     setNavStatus() {
       window.sessionStorage.setItem("", "");
@@ -108,8 +91,8 @@ export default {
 }
 
 .el-aside {
-  width: 200px;
-  background-color: #d3dce6;
+  height: 100%;
+  background-color: #ffffff;
   color: #333;
   text-align: center;
   line-height: 200px;
@@ -130,15 +113,6 @@ body > .el-container {
   height: 100%;
 }
 
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
-
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
-
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
@@ -149,7 +123,8 @@ body > .el-container {
 }
 
 .mb-2 {
-  background-color: #e9eef3;
+  border-right: solid 1px #d0d7e0;
+  background-color: #ffffff;
   font-size: 16px;
   line-height: 30px;
   text-align: center;

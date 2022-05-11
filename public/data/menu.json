@@ -1,13 +1,132 @@
 {
-    "data": {
-        "id": 1,
-        "name": "机器列表",
-        "path": null,
-        "childen": {
-            "id": 11,
-            "name": "机器列表1",
+    "data": [
+        {
+            "id": 1,
+            "index": "1",
+            "name": "主机配置",
             "path": null,
             "childen": []
         },
+        {
+            "id": 2,
+            "index": "2",
+            "name": "文件传输",
+            "path": null,
+            "childen": [
+                {
+                    "id": 21,
+                    "index": "2-1",
+                    "name": "文件上传",
+                    "path": null,
+                    "childen": []
+                },
+                {
+                    "id": 22,
+                    "index": "2-2",
+                    "name": "文件上传",
+                    "path": null,
+                    "childen": []
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "index": "3",
+            "name": "平台巡检",
+            "path": null,
+            "childen": [
+                {
+                    "id": 31,
+                    "index": "3-1",
+                    "name": "农行平台",
+                    "path": null,
+                    "childen": []
+                },
+                {
+                    "id": 32,
+                    "index": "3-2",
+                    "name": "建行平台",
+                    "path": null,
+                    "childen": []
+                },
+                {
+                    "id": 33,
+                    "index": "3-3",
+                    "name": "金融平台",
+                    "path": null,
+                    "childen": []
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "index": "4",
+            "name": "Redis监控",
+            "path": null,
+            "childen": [
+                {
+                    "id": 41,
+                    "index": "4-1",
+                    "name": "农行平台",
+                    "path": null,
+                    "childen": []
+                },
+                {
+                    "id": 42,
+                    "index": "4-2",
+                    "name": "建行平台",
+                    "path": null,
+                    "childen": []
+                },
+                {
+                    "id": 43,
+                    "index": "4-3",
+                    "name": "金融平台",
+                    "path": null,
+                    "childen": []
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "index": "5",
+            "name": "监控总览",
+            "path": null,
+            "childen": [
+                {
+                    "id": 51,
+                    "index": "5-1",
+                    "name": "农行平台",
+                    "path": null,
+                    "childen": [
+                        {
+                            "id": 511,
+                            "index": "5-1-1",
+                            "name": "量级监控",
+                            "path": null,
+                            "childen": []
+                        },
+                        {
+                            "id": 512,
+                            "index": "5-1-2",
+                            "name": "积压监控",
+                            "path": null,
+                            "childen": []
+                        }
+                    ]
+                },
+                {
+                    "id": 52,
+                    "index": "5-2",
+                    "name": "建行平台",
+                    "path": null,
+                    "childen": []
+                }
+            ]
+        }
+    ],
+    "meta": {
+        "status": 200,
+        "msg": "success"
     }
 }

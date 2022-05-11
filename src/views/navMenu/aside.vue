@@ -1,58 +1,47 @@
 <template>
-  <el-row class="tac">
-    <el-col :span="12">
-      <h5 class="mb-2">Default colors</h5>
-      <el-menu
-        default-active="2"
-        class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
+  <template v-if="item.childen && item.childen.length === 0">
+    <el-menu-item :key="item.id" :index="item.index"
+      ><el-icon><edit /></el-icon> <span>{{ item.name }}</span>
+    </el-menu-item>
+  </template>
+
+  <el-sub-menu v-else :index="item.index" :key="item.id">
+    <template #title>
+      <el-icon><edit /></el-icon>
+      <span>{{ item.name }}</span>
+    </template>
+    <template v-for="child in item.childen">
+      <a-side
+        v-if="child.childen && child.childen.length > 0"
+        :key="child.id"
+        :item="child"
+        :index="child.index"
+      ></a-side>
+      <el-menu-item v-else :index="child.index" :key="child.id"
+        ><template #title>
+          <el-icon><fold /></el-icon>
+          <span>{{ child.name }}</span>
+        </template></el-menu-item
       >
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon><location /></el-icon>
-            <span>Navigator One</span>
-          </template>
-          <el-menu-item-group title="Group One">
-            <el-menu-item index="1-1">item one</el-menu-item>
-            <el-menu-item index="1-2">item one</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="Group Two">
-            <el-menu-item index="1-3">item three</el-menu-item>
-          </el-menu-item-group>
-          <el-sub-menu index="1-4">
-            <template #title>item four</template>
-            <el-menu-item index="1-4-1">item one</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-menu-item index="2">
-          <el-icon><icon-menu /></el-icon>
-          <span>Navigator Two</span>
-        </el-menu-item>
-        <el-menu-item index="3" disabled>
-          <el-icon><document /></el-icon>
-          <span>Navigator Three</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <el-icon><setting /></el-icon>
-          <span>Navigator Four</span>
-        </el-menu-item>
-      </el-menu>
-    </el-col>
-  </el-row>
+    </template>
+  </el-sub-menu>
 </template>
 
-<script lang="ts" setup>
+<script>
 import {
   Document,
   Menu as IconMenu,
   Location,
   Setting,
 } from "@element-plus/icons-vue";
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
-};
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+
+export default {
+  name: "aSide",
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>

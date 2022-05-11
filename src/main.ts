@@ -40,7 +40,7 @@ import {
   Delete,
 } from "@element-plus/icons";
 
-axios.defaults.baseURL = "http://127.0.0.1:8888/";
+axios.defaults.baseURL = "/data";
 const app = createApp(App);
 app.use(ElButton);
 app.use(ElInput);
