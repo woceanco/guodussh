@@ -29,6 +29,7 @@ import {
   ElSwitch,
   ElPagination,
   ElDialog,
+  ElDropdown,
 } from "element-plus";
 import {
   Location,
@@ -65,6 +66,7 @@ app.use(ElTableColumn);
 app.use(ElSwitch);
 app.use(ElPagination);
 app.use(ElDialog);
+app.use(ElDropdown);
 app.component("location", Location);
 app.component("document", Document);
 //app.component("iconMenu",IconMenu);

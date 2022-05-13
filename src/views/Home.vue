@@ -2,25 +2,33 @@
   <div style="height: 800px">
     <el-container class="containter">
       <el-container class="body">
-        <el-header class="header">header</el-header>
+        <el-aside :width="isCollapse ? '60px' : '200px'"
+          ><div class="mb-2">
+            <span class="demonstration">TEST PRO</span>
+          </div>
+
+          <el-menu
+            default-active="2"
+            class="el-menu-vertical-demo"
+            :unique-opened="true"
+            :collapse="isCollapse"
+            :router="true"
+            :default-active="activePath"
+          >
+            <a-side
+              v-for="menu in menuList"
+              :item="menu"
+              :key="menu.id"
+            ></a-side>
+          </el-menu>
+        </el-aside>
         <el-container>
-          <el-aside :width="isCollapse ? '60px' : '200px'"
-            ><div class="mb-2" @click="menuCollapse">|||</div>
-            <el-menu
-              default-active="2"
-              class="el-menu-vertical-demo"
-              :unique-opened="true"
-              :collapse="isCollapse"
-              :router="true"
-              :default-active="activePath"
-            >
-              <a-side
-                v-for="menu in menuList"
-                :item="menu"
-                :key="menu.id"
-              ></a-side>
-            </el-menu>
-          </el-aside>
+          <el-header>
+            <span @click="menuCollapse" :style="center">
+              <el-icon :size="30"><fold /></el-icon>
+            </span>
+            <Header />
+          </el-header>
           <el-main>
             <Tabs />
           </el-main>
@@ -33,6 +41,7 @@
 <script>
 import Tabs from "@/components/main/tabs.vue";
 import aSide from "@/components/navMenu/aside.vue";
+import Header from "@/components/navMenu/header.vue";
 
 // interface IDate {
 //   test: string;
@@ -47,11 +56,13 @@ export default {
       isCollapse: false,
       activePath: "",
       menuList: [],
+      url: "../assets/images/guoducard.png",
     };
   },
   components: {
     Tabs,
     aSide,
+    Header,
   },
   props: {
     list: {
@@ -82,12 +93,16 @@ export default {
 <style scoped>
 .el-header,
 .el-footer {
-  background-color: #b3c0d1;
+  background-color: #fff;
   color: #333;
   text-align: center;
-  line-height: 60px;
   display: flex;
   justify-content: space-between;
+}
+
+.el-header {
+  border-bottom: #e9eef3 solid 1px;
+  line-height: 80px;
 }
 
 .el-aside {
@@ -99,7 +114,7 @@ export default {
 }
 
 .el-main {
-  background-color: #e9eef3;
+  background-color: #fff;
   color: #333;
   text-align: center;
   line-height: 160px;
